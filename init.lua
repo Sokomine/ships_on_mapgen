@@ -79,6 +79,11 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			table.insert( replacements, {"starisplus:panel_wood_bottom", "stairs:stair_wood"});
 		end
 
+		-- fence rails are only supported in newest versions of minetest_game
+		if( not( minetest.registered_nodes[ "default:fence_rail_wood"])) then
+			table.insert( replacements, {"default:fence_rail_wood", "default:fence_wood"});
+		end
+
 		local success = handle_schematics.place_schematic_on_flat_land( heightmap, minp, maxp,
 			building.sizex, building.sizez, -100, building.yoff-1,
 			3, 3, 0, 0, -- margin: front, back, right, left
