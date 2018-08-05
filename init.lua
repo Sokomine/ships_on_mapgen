@@ -20,6 +20,9 @@ ships_on_mapgen.schematics = {
 	{scm="raft_2_2_180", typ="ship", is_ship=true, orients={0}},
 	-- raft with hut on it
 	{scm="raft_3_2_180", typ="ship", is_ship=true, orients={0}},
+
+	-- pirate ship from AspireMint
+	{scm="pirate_ship_aspiremint_0_90", typ="ship", is_ship=true, orients={0}},
 }
 
 
@@ -62,10 +65,20 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			-- colored sails can make the ships more intresting
 			local colors = {"white", "white", "yellow", "grey", "black", "brown", "dark_green"};
 			table.insert( replacements, {"cottages:wool", "wool:"..colors[math.random(1,#colors)]});
+			table.insert( replacements, {"wool:white", "wool:"..colors[math.random(1,#colors)]});
 		else
 			-- not all ships have sails set
 			table.insert( replacements, {"cottages:wool", "air"});
+			table.insert( replacements, {"wool:white", "air"});
 		end
+
+		-- AspireMints pirate ship uses stairplus stairs for better room usage;
+		-- if those blocks are not available, normal stairs may be better than nothing
+		if( building.scm == "pirate_ship_aspiremint"
+		  and not( minetest.registered_nodes[ "stairsplus:panel_wood_bottom"])) then
+			table.insert( replacements, {"starisplus:panel_wood_bottom", "stairs:stair_wood"});
+		end
+
 		local success = handle_schematics.place_schematic_on_flat_land( heightmap, minp, maxp,
 			building.sizex, building.sizez, -100, building.yoff-1,
 			3, 3, 0, 0, -- margin: front, back, right, left
