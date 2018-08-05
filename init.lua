@@ -22,7 +22,7 @@ ships_on_mapgen.schematics = {
 	{scm="raft_3_2_180", typ="ship", is_ship=true, orients={0}},
 
 	-- pirate ship from AspireMint
-	{scm="pirate_ship_aspiremint_0_90", typ="ship", is_ship=true, orients={0}},
+	{scm="pirate_ship_aspiremint_3_90", typ="ship", is_ship=true, orients={0}},
 }
 
 
