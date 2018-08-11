@@ -23,6 +23,10 @@ ships_on_mapgen.schematics = {
 
 	-- pirate ship from AspireMint
 	{scm="pirate_ship_aspiremint_3_90", typ="ship", is_ship=true, orients={0}},
+
+	{scm="pirate_shipwreck1__abandoned_1_90", typ="wreck", is_submerged=1, orients={0}},
+	{scm="pirate_shipwreck2_destroyed_by_pirates_0_90", typ="wreck", is_submerged=1, orients={0}},
+	{scm="pirate_shipwreck3_destroyed_by_kraken_0_90", typ="wreck", is_submerged=1, orients={0}},
 }
 
 
@@ -55,8 +59,11 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		local replacements = {{'handle_schematics:build','default:chest'}};
 		-- choose a random ship
 		local building = ships_on_mapgen.schematics[ math.random(1,#ships_on_mapgen.schematics) ];
+		-- shipwrecks
+		if( building.typ == "wreck" ) then
+			replacements = {};
 		-- the boat file uses strange blocks not occouring in default
-		if( building.scm == "boat" ) then
+		elseif( building.scm == "boat" ) then
 			replacements = {
 				{'color:orange', 'default:wood'},
 				{'color:white', 'wool:white'},
@@ -91,7 +98,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			replacements,
 			building.yoff,
 			building.orients[1],
-			building
+			building,
+			true
 			);
 	end
 end);
