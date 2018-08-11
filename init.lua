@@ -77,6 +77,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			-- not all ships have sails set
 			table.insert( replacements, {"cottages:wool", "air"});
 			table.insert( replacements, {"wool:white", "air"});
+			table.insert( replacements, {"wool:grey", "air"});
 		end
 
 		-- AspireMints pirate ship uses stairplus stairs for better room usage;
