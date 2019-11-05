@@ -84,7 +84,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		-- if those blocks are not available, normal stairs may be better than nothing
 		if( building.scm == "pirate_ship_aspiremint"
 		  and not( minetest.registered_nodes[ "stairsplus:panel_wood_bottom"])) then
-			table.insert( replacements, {"starisplus:panel_wood_bottom", "stairs:stair_wood"});
+			table.insert( replacements, {"stairsplus:panel_wood_bottom", "stairs:stair_wood"});
 		end
 
 		-- fence rails are only supported in newest versions of minetest_game
