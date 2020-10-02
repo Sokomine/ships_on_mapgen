@@ -71,8 +71,12 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		elseif( math.random(1,3)>1) then
 			-- colored sails can make the ships more intresting
 			local colors = {"white", "white", "yellow", "grey", "black", "brown", "dark_green"};
-			table.insert( replacements, {"cottages:wool", "wool:"..colors[math.random(1,#colors)]});
-			table.insert( replacements, {"wool:white", "wool:"..colors[math.random(1,#colors)]});
+			local wool_mod = 'wool:'
+			if(minetest.registered_nodes['mcl_core:stone']) then
+				wool_mod = 'mcl_wool:'
+			end
+			table.insert( replacements, {"cottages:wool", wool_mod..colors[math.random(1,#colors)]});
+			table.insert( replacements, {"wool:white", wool_mod..colors[math.random(1,#colors)]});
 		else
 			-- not all ships have sails set
 			table.insert( replacements, {"cottages:wool", "air"});
@@ -90,6 +94,25 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		-- fence rails are only supported in newest versions of minetest_game
 		if( not( minetest.registered_nodes[ "default:fence_rail_wood"])) then
 			table.insert( replacements, {"default:fence_rail_wood", "default:fence_wood"});
+		end
+
+		-- some of these nodes do not exist in MineClone2
+		if(minetest.registered_nodes['mcl_core:stone']) then
+			table.insert( replacements, {'stairs:stair_straw', 'cottages:roof_connector_straw'})
+			table.insert( replacements, {'stairs:slab_straw', 'cottages:roof_flat_straw'})
+			table.insert( replacements, {'default:apple', 'air'})
+			table.insert( replacements, {'vessels:shelf', 'air'})
+			table.insert( replacements, {'vessels:glass_bottle', 'air'})
+			table.insert( replacements, {'vessels:drinking_glass', 'air'})
+			table.insert( replacements, {'stairsplus:panel_wood_bottom', 'cottages:wood_flat'})
+			table.insert( replacements, {'stairs:slab_pine_wood', 'stairs:slab_wood'})
+		end
+		-- replace wood types that may occour in ships but which may not be part of all games
+		if(not(minetest.registered_nodes['default:junglewood'])) then
+			handle_schematics.replace_material( replacements, 'wood', 'default:junglewood', nil)
+		end
+		if(not(minetest.registered_nodes['default:pine_wood'])) then
+			handle_schematics.replace_material( replacements, 'wood', 'default:pine_wood', nil)
 		end
 
 		local success = handle_schematics.place_schematic_on_flat_land( heightmap, minp, maxp,
